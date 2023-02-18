@@ -15,7 +15,7 @@ Comment.init(
       }
     },
     {
-        sequilize
+        sequelize
     }
 );
 

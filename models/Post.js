@@ -18,7 +18,7 @@ Post.init(
       }
     },
     {
-        sequilize
+        sequelize
     }
 );
 

@@ -23,7 +23,7 @@ foreignKey: 'postId'
 });
 
 
-Comments.beongsTo(User, {
+Comments.belongsTo(User, {
     foreignKey:'userId',
     onDelete: 'CASCADE'
 });
