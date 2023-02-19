@@ -45,11 +45,10 @@ router.get('/post/:id', async (req, res) => {
  if (postData){
     const posts = postData.get({ plain: true });
 
-    res.render('single-post', { postData });
-
+    // res.render('single-post', { postData });
 
 // checked it on insomnia without frontend 
-    // res.json({ postData, message: 'You are now logged in!' });
+    res.json({ posts, message: 'You are now logged in!' });
  } else{
     res.status(404).end();
  }
@@ -60,6 +59,96 @@ router.get('/post/:id', async (req, res) => {
 
 
 
+
+
+// dashboard getting blogs user created 
+router.get('/dashboard/:id', async (req, res) => {
+  try {
+   
+    const postData = await Post.findAll({
+  where: {
+    userId: req.session.userId,
+  }
+    });
+
+    // Serialize data so the template can read it
+    const posts = postData.map((post) => post.get({ plain: true }));
+
+    // Pass serialized data and session flag into template
+    // res.render('dashboard', { posts });
+
+// testing it without front end
+    res.json({ message: 'worked' });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
+
+
+
+// routing for a user to write a new blog on dashboard page 
+router.get('/dashboard/new', (req, res) => {
+  res.render('newPost')
+});
+
+
+
+
+
+
+
+// getting a single blog on dashboard in order to edit it
+router.get('/dashboard/edit/:id',  async (req, res) => {
+  try{
+const postData = await Post.findByPk(req.params.id, {
+  include: [
+    User,
+    {
+      model: Comments,
+     include: [User],     
+       },
+  ],
+});
+if (postData){
+const posts = postData.get({ plain: true });
+
+// for insomnia without front end
+// res.json({ posts, message: 'You are now logged in!' });
+
+res.render('dashboardSinglePost', { posts });
+}
+  }
+  catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
+
+
+
+
+
+
+router.delete('/dashboard/delete/:id', async (req, res) => {
+  try {
+          const postData = await Post.destroy({ 
+                  where: {
+                  id: req.params.id,
+                  },
+              });
+              if (!postData) {
+                  res.status(404).json({ message: 'No post found with this id!' });
+                  return;
+                }
+          res.status(200).json(postData);
+  }
+      catch (err) {
+          res.status(500).json(err);
+      }
+  });
 
 
 
