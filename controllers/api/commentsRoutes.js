@@ -1,20 +1,26 @@
 const router = require('express').Router();
-const { Comments, User, Post } = require('../../models');
+const { Comment, User, Post } = require('../../models');
 // const withAuth = require('../utils/auth');
 
-router.post('/', async (req, res) => {
+
+
+router.post('/',  async (req, res) => {
+    console.log('HITROUTE');
+ 
 try{
-    const commentsData = await Comments.create({
-        ...req.body,
-        userId: req.session.userId,
-        
+    console.log('try block');
+    const commentsData = await Comment.create({
+        body: req.body.comment,
+        userId: req.session.user_id,
+        postId: req.body.postId
     });
-    res.status(200).json(commentsData);
     console.log(commentsData);
+    res.status(200).json(commentsData);
+  
     }
-catch (err) {
-    res.status(400).json(err);
-  }
+    catch (err) {
+        res.status(500).json(err);
+    }
 
 });
 

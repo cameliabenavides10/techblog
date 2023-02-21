@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Comments, User, Post } = require('../models');
+const { Comment, User, Post } = require('../models');
 const withAuth = require('../utils/auth');
 require('dotenv').config();
 
@@ -38,7 +38,7 @@ router.get('/post/:id', async (req, res) => {
       include: [
          User,
         {
-          model: Comments,
+          model: Comment,
          include: [User],     
            },
          
@@ -70,7 +70,7 @@ router.get('/dashboard/:id', withAuth, async (req, res) => {
    
     const postData = await Post.findAll({
   where: {
-    userId: req.session.userId,
+    userId: req.session.user_id,
    },
    
     });
@@ -109,7 +109,7 @@ const postData = await Post.findByPk(req.params.id, {
   include: [
     User,
     {
-      model: Comments,
+      model: Comment,
      include: [User],     
        },
   ],

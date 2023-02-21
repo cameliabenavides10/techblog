@@ -1,22 +1,24 @@
 
 const newFormHandler = async (event) => {
   event.preventDefault();
+console.log('GOODBYE');
+const postId = event.target.getAttribute('postId')
+const comment = document.querySelector('#commentsForm').value.trim();
+console.log('HELLO:'+ comment);
+console.log(postId);
 
-const postId = document.getElementById('post_id').value
-const comment = document.querySelector('#exampleFormControlInput1').value.trim();
-console.log(comment);
   if (comment) {
     const response = await fetch(`/api/comments/`, {
       method: 'POST',
       body: JSON.stringify({ comment, postId }),
       headers: {
         'Content-Type': 'application/json',
-      },
+      }, 
     });
 
     if (response.ok) {
 console.log("GREAT!")
-      res.location.replace(`/post/${postId}`)
+
     
     } else {
       alert('Failed to create comment');
@@ -25,6 +27,5 @@ console.log("GREAT!")
 };
 
 
-document
-  .querySelector('.btn')
-  .addEventListener('submit', newFormHandler);
+document.getElementById("formbutton").addEventListener("click", newFormHandler);
+console.log("TEXT FROM MAIN");
