@@ -17,10 +17,10 @@ router.get('/', async (req, res) => {
     const posts = postData.map((post) => post.get({ plain: true }));
 
     // Pass serialized data and session flag into template
-    // res.render('all-posts', { posts });
+    res.render('all-posts', { posts, logged_in: req.session.logged_in });
 
 // testing it without front end
-    res.json({ message: 'worked' });
+    // res.json({ message: 'worked' });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -34,21 +34,26 @@ router.get('/', async (req, res) => {
 router.get('/post/:id', async (req, res) => {
   try {
     const postData = await Post.findByPk(req.params.id, {
+    
       include: [
-        User,
+         User,
         {
           model: Comments,
          include: [User],     
            },
-      ],
+         
+    ],
+    
     });
+   
  if (postData){
-    const posts = postData.get({ plain: true });
+    const post = postData.get({ plain: true });
+  
+console.log("Worked!!!")
+    res.render('individualPost', { post, logged_in: req.session.logged_in  });
+console.log(post);
+console.log(post.Comments[0]);
 
-    // res.render('single-post', { postData });
-
-// checked it on insomnia without frontend 
-    res.json({ posts, message: 'You are now logged in!' });
  } else{
     res.status(404).end();
  }
@@ -75,10 +80,10 @@ router.get('/dashboard/:id', async (req, res) => {
     const posts = postData.map((post) => post.get({ plain: true }));
 
     // Pass serialized data and session flag into template
-    // res.render('dashboard', { posts });
+    res.render('dashboard', { posts, logged_in: req.session.logged_in  });
 
 // testing it without front end
-    res.json({ message: 'worked' });
+    // res.json({ message: 'worked' });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -86,6 +91,10 @@ router.get('/dashboard/:id', async (req, res) => {
 
 
 
+
+router.get('/dashboard', (req, res) => {
+  res.render('dashboard')
+});
 
 
 // routing for a user to write a new blog on dashboard page 
@@ -117,7 +126,7 @@ const posts = postData.get({ plain: true });
 // for insomnia without front end
 // res.json({ posts, message: 'You are now logged in!' });
 
-res.render('dashboardSinglePost', { posts });
+res.render('dashboardSinglePost', { posts, logged_in: req.session.logged_in  });
 }
   }
   catch (err) {
@@ -151,18 +160,6 @@ router.delete('/dashboard/delete/:id', async (req, res) => {
   });
 
 
-
-
-router.get('/signup', async (req, res) => {
-
-    if (req.session.logged_in) {
-        res.redirect('/');
-        return;
-      }
-    
-      res.render('signup');
-    });
-    
 
 
 
