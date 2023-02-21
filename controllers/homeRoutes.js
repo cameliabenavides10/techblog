@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { Comment, User, Post } = require('../models');
-const withAuth = require('../utils/auth');
+// const withAuth = require('../utils/auth');
 require('dotenv').config();
 
 
@@ -65,7 +65,7 @@ router.get('/post/:id', async (req, res) => {
 
 
 // dashboard getting blogs user created 
-router.get('/dashboard/:id', withAuth, async (req, res) => {
+router.get('/dashboard/:id', async (req, res) => {
   try {
    
     const postData = await Post.findAll({
@@ -79,7 +79,7 @@ router.get('/dashboard/:id', withAuth, async (req, res) => {
     const posts = postData.map((post) => post.get({ plain: true }));
     console.log(posts);
     // Pass serialized data and session flag into template
-    res.render('dashboard', { posts, logged_in: req.session.logged_in  });
+    res.render('dashboard', { posts, logged_in: req.session.logged_in, userId: req.session.user_id,  });
 
 // testing it without front end
     // res.json({ message: 'worked' });
