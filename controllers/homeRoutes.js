@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { Comments, User, Post } = require('../models');
-// const withAuth = require('../utils/auth');
+const withAuth = require('../utils/auth');
 require('dotenv').config();
 
 
@@ -48,11 +48,9 @@ router.get('/post/:id', async (req, res) => {
    
  if (postData){
     const post = postData.get({ plain: true });
-  
-console.log("Worked!!!")
+ 
     res.render('individualPost', { post, logged_in: req.session.logged_in  });
-console.log(post);
-console.log(post.Comments[0]);
+
 
  } else{
     res.status(404).end();
@@ -67,18 +65,19 @@ console.log(post.Comments[0]);
 
 
 // dashboard getting blogs user created 
-router.get('/dashboard/:id', async (req, res) => {
+router.get('/dashboard/:id', withAuth, async (req, res) => {
   try {
    
     const postData = await Post.findAll({
   where: {
     userId: req.session.userId,
-  }
+   },
+   
     });
 
     // Serialize data so the template can read it
     const posts = postData.map((post) => post.get({ plain: true }));
-
+    console.log(posts);
     // Pass serialized data and session flag into template
     res.render('dashboard', { posts, logged_in: req.session.logged_in  });
 
@@ -90,11 +89,6 @@ router.get('/dashboard/:id', async (req, res) => {
 });
 
 
-
-
-router.get('/dashboard', (req, res) => {
-  res.render('dashboard')
-});
 
 
 // routing for a user to write a new blog on dashboard page 

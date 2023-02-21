@@ -1,68 +1,30 @@
-const postId = document.getElementById('post_id').value
-
 
 const newFormHandler = async (event) => {
   event.preventDefault();
 
+const postId = document.getElementById('post_id').value
+const comment = document.querySelector('#exampleFormControlInput1').value.trim();
+console.log(comment);
+  if (comment) {
+    const response = await fetch(`/api/comments/`, {
+      method: 'POST',
+      body: JSON.stringify({ comment, postId }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
+    if (response.ok) {
+console.log("GREAT!")
+      res.location.replace(`/post/${postId}`)
+    
+    } else {
+      alert('Failed to create comment');
+    }
+  }
+};
 
-
-
-
-
-
-
-
-
-
-
-
-}
-
-
-
-
-//   const name = document.querySelector('#project-name').value.trim();
-//   const needed_funding = document.querySelector('#project-funding').value.trim();
-//   const description = document.querySelector('#project-desc').value.trim();
-
-//   if (name && needed_funding && description) {
-//     const response = await fetch(`/api/projects`, {
-//       method: 'POST',
-//       body: JSON.stringify({ name, needed_funding, description }),
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//     });
-
-//     if (response.ok) {
-//       document.location.replace('/profile');
-//     } else {
-//       alert('Failed to create project');
-//     }
-//   }
-// };
-
-// const delButtonHandler = async (event) => {
-//   if (event.target.hasAttribute('data-id')) {
-//     const id = event.target.getAttribute('data-id');
-
-//     const response = await fetch(`/api/projects/${id}`, {
-//       method: 'DELETE',
-//     });
-
-//     if (response.ok) {
-//       document.location.replace('/profile');
-//     } else {
-//       alert('Failed to delete project');
-//     }
-//   }
-// };
 
 document
-  .querySelector('.new-project-form')
+  .querySelector('.btn')
   .addEventListener('submit', newFormHandler);
-
-document
-  .querySelector('.project-list')
-  .addEventListener('click', delButtonHandler);

@@ -1,6 +1,6 @@
 
 <div class="card">
-  <div class="card-header">
+  <div class="card-header"><input id="postId" type="hidden" name="postId" value="{{post.id}}" />
   <p>{{post.title}}</p><footer style="text-align: right;" class="blockquote-footer"> posted by: {{post.user.name}} at {{format_date post.createdAt}} </footer>
   </div>
   <div class="card-body">
@@ -9,7 +9,7 @@
     </blockquote>
   </div>
 </div>
-<div class="card"><input id="post_id" type="hidden" name="post-id" value="{{post.id}}" />
+<div class="card">
   <div class="card-header">
   </div>
   <div class="card-body">
@@ -21,6 +21,13 @@
 </div>
 
 
+<form >
+  <div class="form-group">
+    <input type="form" class="form-control w-100 mh-100" style="height:100px;" id="exampleFormControlInput1" placeholder="Comment"><br>
+      <button type="submit" postId="{{post.id}}" class="btn btn-primary">Submit</button>
+  </div>
 
-<input id="post_id" type="hidden" name="post-id" value="{{post.id}}" />
+
+
+{{!-- <input id="post_id" type="hidden" name="post-id" value="{{post.id}}" /> --}}
 
