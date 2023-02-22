@@ -68,27 +68,25 @@ router.get('/post/:id', async (req, res) => {
 router.get('/dashboard/:id', async (req, res) => {
   try {
    
-    const postData = await Post.findAll({
-      include: [
-        User,
-       {
-         model: Comment,
-        include: [User],     
-          },
-      
-   ],
-  where: {
-    userId: req.session.user_id,
 
-   },
-  
+    const postData = await Post.findAll({
+      include: [User],
+      order: [["createdAt", "DESC"]],
+      where: {
+       userId: req.session.user_id,
+         },
     });
-    
+
     // Serialize data so the template can read it
     const posts = postData.map((post) => post.get({ plain: true }));
+
+    console.log(postData);
+    console.log(req.session.user_id);
+    // Serialize data so the template can read it
+    // const posts = postData.map((post) => post.get({ plain: true }));
     console.log("THIS IS POSTS:" + posts);
     // Pass serialized data and session flag into template
-    res.render('dashboard', { posts, logged_in: req.session.logged_in, userId: req.session.user_id,  });
+    res.render('dashboard', { posts, logged_in: req.session.logged_in, userId: req.session.user_id  });
 
 // testing it without front end
     // res.json({ message: 'worked' });
@@ -101,7 +99,7 @@ router.get('/dashboard/:id', async (req, res) => {
 
 
 // routing for a user to write a new blog on dashboard page 
-router.get('/dashboard/new', (req, res) => {
+router.get('/dashboard/new/:id', (req, res) => {
   res.render('newPost')
 });
 
