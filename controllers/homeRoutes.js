@@ -69,15 +69,24 @@ router.get('/dashboard/:id', async (req, res) => {
   try {
    
     const postData = await Post.findAll({
+      include: [
+        User,
+       {
+         model: Comment,
+        include: [User],     
+          },
+      
+   ],
   where: {
     userId: req.session.user_id,
-   },
-   
-    });
 
+   },
+  
+    });
+    
     // Serialize data so the template can read it
     const posts = postData.map((post) => post.get({ plain: true }));
-    console.log(posts);
+    console.log("THIS IS POSTS:" + posts);
     // Pass serialized data and session flag into template
     res.render('dashboard', { posts, logged_in: req.session.logged_in, userId: req.session.user_id,  });
 

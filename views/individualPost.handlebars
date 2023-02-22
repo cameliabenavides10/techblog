@@ -7,8 +7,13 @@
     <blockquote class="blockquote mb-0">
       <p>{{post.body}}</p>
     </blockquote>
+      <button type="submit" postId="{{post.id}}" class="btn btn-primary" id="deletebutton">Delete</button>
+        <button type="submit" postId="{{post.id}}" class="btn btn-primary" id="formbutton">Edit</button>
   </div>
 </div>
+
+
+
 <div class="card">
   <div class="card-header">
   </div>
@@ -17,6 +22,7 @@
       <p>{{post.Comments.[0].body}}</p>
       <p>- {{post.Comments.[0].user.name}}, {{format_date post.createdAt}} </p>
     </blockquote>
+  
   </div>
 </div>
 
