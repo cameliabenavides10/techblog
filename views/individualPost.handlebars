@@ -8,7 +8,7 @@
       <p>{{post.body}}</p>
     </blockquote>
       <button type="submit" postId="{{post.id}}" class="btn btn-primary" id="deletebutton">Delete</button>
-        <button type="submit" postId="{{post.id}}" class="btn btn-primary" id="editbutton">Edit</button>
+       <a href="/dashboard/edit/{{post.id}}"> <button type="submit" postId="{{post.id}}" class="btn btn-primary" id="editbutton">Edit</button></a>
   </div>
 </div>
 

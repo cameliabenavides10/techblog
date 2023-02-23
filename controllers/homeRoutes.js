@@ -108,32 +108,31 @@ router.get('/dashboard/new/:id', (req, res) => {
 
 
 
-
 // getting a single blog on dashboard in order to edit it
-router.get('/dashboard/edit/:id',  async (req, res) => {
-  try{
-const postData = await Post.findByPk(req.params.id, {
-  include: [
-    User,
-    {
-      model: Comment,
-     include: [User],     
-       },
-  ],
-});
-if (postData){
-const posts = postData.get({ plain: true });
+// router.get('/dashboard/edit/:id',  async (req, res) => {
+//   try{
+// const postData = await Post.findByPk(req.params.id, {
+//   include: [
+//     User,
+//     {
+//       model: Comment,
+//      include: [User],     
+//        },
+//   ],
+// });
+// if (postData){
+// const posts = postData.get({ plain: true });
 
-// for insomnia without front end
-// res.json({ posts, message: 'You are now logged in!' });
+// // for insomnia without front end
+// // res.json({ posts, message: 'You are now logged in!' });
 
-res.render('dashboardSinglePost', { posts, logged_in: req.session.logged_in  });
-}
-  }
-  catch (err) {
-    res.status(500).json(err);
-  }
-});
+// res.render('dashboardSinglePost', { posts, logged_in: req.session.logged_in  });
+// }
+//   }
+//   catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 
 
@@ -176,5 +175,55 @@ router.get('/login', (req, res) => {
 
   res.render('login');
 });
+
+
+
+
+
+
+// routing for a user to edit a post on dashboard page 
+router.get('/dashboard/edit/:id', async (req, res) => {
+    try {
+      const postData = await Post.findByPk(req.params.id, {
+      
+        include: [
+           User,
+          {
+            model: Comment,
+           include: [User],     
+             },
+           
+      ],
+      
+      });
+     
+   if (postData){
+      const post = postData.get({ plain: true });
+
+      res.render('editPost', { post, logged_in: req.session.logged_in  });
+
+
+    } else{
+       res.status(404).end();
+    }
+     } catch (err) {
+       res.status(500).json(err);
+     }
+   });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = router;
