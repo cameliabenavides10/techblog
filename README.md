@@ -22,7 +22,9 @@ Writing about tech can be just as important as making it. Developers spend plent
 A CMS-style blog site similar to a Wordpress site, where developers can publish their blog posts and comment on other developers’ posts as well. It is deployed using  Heroku. This app uses a MVC paradigm in its architectural structure, using Handlebars.js as the templating language, Sequelize as the ORM, and the express-session npm package for authentication.
 
 ## Installation
-This app requires a functioning browser in order to run correctly. 
+This app requires a functioning browser in order to run correctly.
+Deployed link: 
+https://techblog1002.herokuapp.com/
 
  ## Usage 
 This app has get, post, update, and delete routes using express. A blogger can create a post, update that post, and delete that post. A user can also comment on a post, but they are not allowed to update or delete their comments. A user must also be logged in to their account in order to access certain parts of this application which is checked by a helper function embedded into the routing functions. 
