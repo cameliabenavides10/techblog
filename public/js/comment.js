@@ -18,7 +18,7 @@ console.log(postId);
 
     if (response.ok) {
 console.log("GREAT!")
-document.location.replace(`/post/${userId}`);
+document.location.replace(`/`);
     
     } else {
       alert('Failed to create comment');
