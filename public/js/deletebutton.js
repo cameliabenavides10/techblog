@@ -16,7 +16,7 @@ const deleteFormHandler = async (event) => {
   
       if (response.ok) {
   console.log("GREAT!")
-  document.location.replace(`/post/${userId}`);
+  document.location.replace(`/`);
       
       } else {
         alert('Failed to delete post');

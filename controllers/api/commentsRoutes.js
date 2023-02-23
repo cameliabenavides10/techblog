@@ -6,7 +6,7 @@ const { Comment, User, Post } = require('../../models');
 
 router.post('/',  async (req, res) => {
     console.log('HITROUTE');
- 
+ console.log("BODY:" + req.session.user_id);
 try{
     console.log('try block');
     const commentsData = await Comment.create({
