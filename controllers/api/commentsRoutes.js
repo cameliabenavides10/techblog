@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const { Comment, User, Post } = require('../../models');
-// const withAuth = require('../utils/auth');
+const withAuth = require('../../utils/auth');
 
 
 
-router.post('/',  async (req, res) => {
+router.post('/',  withAuth, async (req, res) => {
     console.log('HITROUTE');
  console.log("BODY:" + req.session.user_id);
 try{
